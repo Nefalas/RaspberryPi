@@ -3,10 +3,10 @@
 
 //Uncomment the following definition when you use them
 
-#define OV2640_CAM
-//#define OV5642_CAM
+//#define OV2640_CAM
+#define OV5642_CAM
 
-#if defined OV5642_CAM	
+#if defined OV5642_CAM
 	#include "ov5642_regs.h"
 #endif
 
