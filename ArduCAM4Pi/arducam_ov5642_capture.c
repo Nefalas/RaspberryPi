@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
 			  digitalWrite(CAM1_CS,LOW);  //Set CS low
 	      set_fifo_burst(BURST_FIFO_READ);
 	      arducam_spi_transfers(buffer,1);//dummy read
-	      int32_t i=0;
+	      int32_t i = 1;
 	      while(len>4096)
 	      {
 	      	arducam_transfers(&buffer[i],4096);
