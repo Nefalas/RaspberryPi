@@ -47,6 +47,7 @@ void setup() {
 }
 
 void capture() {
+  printf("Clearing FIFO\n");
   // Flush FIFO
   arducam_flush_fifo(CAM1_CS);
   // Clear the capture done flag
@@ -57,7 +58,7 @@ void capture() {
   arducam_start_capture(CAM1_CS);
 
   // Wait untill the camera is done capturing
-  while (!(arducam_read_reg(ARDUCHIP_TRIG,CAM1_CS) & CAP_DONE_MASK)) ;
+  while (!(arducam_read_reg(ARDUCHIP_TRIG, CAM1_CS) & CAP_DONE_MASK)) ;
   printf("Capture Done\n");
 
   printf("Reading FIFO\n");
@@ -81,8 +82,8 @@ void capture() {
   // Start reading
   set_fifo_burst(BURST_FIFO_READ);
 
-  int32_t i=0; // First bit needs to be 0xff
-  while(len>4096) {
+  int32_t i = 0;
+  while(len > 4096) {
     arducam_transfers(&buffer[i], 4096);
     len -= 4096;
     i += 4096;
