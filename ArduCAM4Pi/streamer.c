@@ -137,19 +137,19 @@ int main(int argc, char *argv[]) {
 
   printf("Length: %d\n", img_len);
 
-  /*
-  // Open the new file
-  FILE *fp1 = fopen(filename, "w+");
+  if (strcmp(argv[1], "-s") == 0)) {
+    // Open the new file
+    FILE *fp1 = fopen(filename, "w+");
 
-  if (!fp1) {
-      printf("Error: could not open %s\n", argv[2]);
-      exit(EXIT_FAILURE);
+    if (!fp1) {
+        printf("Error: could not open %s\n", argv[2]);
+        exit(EXIT_FAILURE);
+    }
+
+    fwrite(buffer, img_len, 1, fp1);
+    delay(100);
+    fclose(fp1);
   }
-
-  fwrite(buffer, img_len, 1, fp1);
-  delay(100);
-  fclose(fp1);
-  */
 
   exit(EXIT_SUCCESS);
 }
