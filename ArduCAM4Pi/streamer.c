@@ -126,7 +126,7 @@ int main(int argc, char *argv[]) {
   // Set output format to JPEG
   arducam_set_format(fmtJPEG);
   // Set resolution to HD
-  arducam_OV5642_set_jpeg_size(OV5642_1920x1080);
+  arducam_OV5642_set_jpeg_size(OV5642_1280x720);
   // wait to let the camera perform the auto exposure correction
   sleep(1);
 
