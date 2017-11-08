@@ -6,15 +6,18 @@
 #include <time.h>
 #include <wiringPiSPI.h>
 #include <unistd.h>
+#include <time.h>
 #include "arducam.h"
 #define OV5642_CHIPID_HIGH 0x300a
 #define OV5642_CHIPID_LOW 0x300b
 
 #define BUF_SIZE (384*1024)
 uint8_t buffer[BUF_SIZE] = {0xFF};
-const uint16_t TRANSFER_SIZE = 8192;
+const uint16_t TRANSFER_SIZE = 4096;
 
 const char* filename = "test.jpg";
+
+clock_t start, stop;
 
 void setup() {
   uint8_t vid, pid, temp;
@@ -49,6 +52,8 @@ void setup() {
 
 size_t capture() {
   printf("Clearing FIFO\n");
+
+  start = clock();
   // Flush FIFO
   arducam_flush_fifo(CAM1_CS);
   // Clear the capture done flag
@@ -95,6 +100,11 @@ size_t capture() {
 
   // Enable bus priority
   digitalWrite(CAM1_CS, HIGH);
+
+  stop = clock();
+  float elapsed = ((float)(t2 - t1) / 1000000.0F ) * 1000;  
+  printf("Capture done in %f milliseconds\n", elapsed);
+
   return len + i;
 }
 
@@ -104,7 +114,7 @@ int main(int argc, char *argv[]) {
   // Set output format to JPEG
   arducam_set_format(fmtJPEG);
   // Set resolution to HD
-  arducam_OV5642_set_jpeg_size(OV5642_1280x720);
+  arducam_OV5642_set_jpeg_size(OV5642_1920x1080);
   // wait to let the camera perform the auto exposure correction
   sleep(1);
 
