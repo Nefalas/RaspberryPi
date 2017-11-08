@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
         // Change to JPEG capture mode and initialize the OV2640 module
         if (strcmp(argv[3], "320x240") == 0) arducam_OV5642_set_jpeg_size(OV5642_320x240);
         else if (strcmp(argv[3], "640x480") == 0) arducam_OV5642_set_jpeg_size(OV5642_640x480);
-        else if (strcmp(argv[2], "1280x720") == 0) arducam_OV5642_set_jpeg_size(OV5642_1280x720);
+        else if (strcmp(argv[3], "1280x720") == 0) arducam_OV5642_set_jpeg_size(OV5642_1280x720);
         else if (strcmp(argv[3], "1920x1080") == 0) arducam_OV5642_set_jpeg_size(OV5642_1920x1080);
         else if (strcmp(argv[3], "2048x1536") == 0) arducam_OV5642_set_jpeg_size(OV5642_2048x1536);
         else if (strcmp(argv[3], "2592x1944") == 0) arducam_OV5642_set_jpeg_size(OV5642_2592x1944);
