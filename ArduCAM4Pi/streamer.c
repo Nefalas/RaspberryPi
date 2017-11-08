@@ -137,7 +137,7 @@ int main(int argc, char *argv[]) {
 
   printf("Length: %d\n", img_len);
 
-  if (strcmp(argv[1], "-s") == 0)) {
+  if (strcmp(argv[1], "-s") == 0) {
     // Open the new file
     FILE *fp1 = fopen(filename, "w+");
 
