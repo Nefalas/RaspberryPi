@@ -110,9 +110,19 @@ int main(int argc, char *argv[]) {
   // Enable VSYNC
   arducam_write_reg(ARDUCHIP_TIM, VSYNC_LEVEL_MASK,CAM1_CS);
 
-  for (int i = 0; i < 24; i++) {
-    capture();
+  capture();
+
+  // Open the new file
+  FILE *fp1 = fopen(argv[2], "w+");
+
+  if (!fp1) {
+      printf("Error: could not open %s\n", argv[2]);
+      exit(EXIT_FAILURE);
   }
+
+  fwrite(buffer, len+i, 1, fp1);
+  delay(100);
+  fclose(fp1);
 
   exit(EXIT_SUCCESS);
 }
