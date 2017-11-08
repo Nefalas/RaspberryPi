@@ -95,7 +95,7 @@ size_t capture() {
 
   // Enable bus priority
   digitalWrite(CAM1_CS, HIGH);
-  return len;
+  return len + i;
 }
 
 int main(int argc, char *argv[]) {
