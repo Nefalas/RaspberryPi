@@ -102,7 +102,7 @@ size_t capture() {
   digitalWrite(CAM1_CS, HIGH);
 
   stop = clock();
-  float elapsed = ((float)(t2 - t1) / 1000000.0F ) * 1000;  
+  float elapsed = ((float)(stop - start) / 1000000.0F ) * 1000;  
   printf("Capture done in %f milliseconds\n", elapsed);
 
   return len + i;
