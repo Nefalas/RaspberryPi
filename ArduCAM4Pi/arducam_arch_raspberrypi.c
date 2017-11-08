@@ -17,7 +17,7 @@
 #include <wiringPi.h>
 
 #define	SPI_ARDUCAM_SPEED	1000000
-#define	SPI_ARDUCAM		      7
+#define	SPI_ARDUCAM		      1
 
 static int FD;
 
