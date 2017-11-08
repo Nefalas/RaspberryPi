@@ -13,16 +13,18 @@
 #define BUF_SIZE (384*1024)
 uint8_t buffer[BUF_SIZE] = {0xFF};
 
-const char* filename = "test.jpg";
+// const char* filename = "test.jpg";
 
 void setup() {
   uint8_t vid,pid;
   uint8_t temp;
   wiring_init();
   arducam(smOV5642,CAM1_CS,-1,-1,-1);
+
   // Check if the ArduCAM SPI bus is OK
   arducam_write_reg(ARDUCHIP_TEST1, 0x55, CAM1_CS);
   temp = arducam_read_reg(ARDUCHIP_TEST1, CAM1_CS);
+
   //printf("temp=%x\n",temp);  //  debug
   if(temp != 0x55) {
     printf("SPI interface error!\n");
@@ -73,6 +75,7 @@ int main(int argc, char *argv[]) {
   while (!(arducam_read_reg(ARDUCHIP_TRIG,CAM1_CS) & CAP_DONE_MASK)) ;
   printf("Capture Done\n");
 
+  /*
   // Generate JPEG file for testing
   printf("Saving capture as %s\n", filename);
 
@@ -83,21 +86,33 @@ int main(int argc, char *argv[]) {
     printf("Error: could not open %s\n", argv[2]);
     exit(EXIT_FAILURE);
   }
+  */
 
   printf("Reading FIFO\n");
 
+  // Get length of image data
   size_t len = read_fifo_length(CAM1_CS);
-  if (len >= 393216){
+
+  // Exit if there was a data overflow problem
+  if (len >= 393216) {
     printf("Over size.");
     exit(EXIT_FAILURE);
-  }else if (len == 0 ){
+  // Exit if the data couldn't be read
+  } else if (len == 0 ) {
     printf("Size is 0.");
     exit(EXIT_FAILURE);
   }
-  digitalWrite(CAM1_CS,LOW);  //Set CS low
+
+  // Disable bus priority
+  digitalWrite(CAM1_CS,LOW);
+
+  // Start reading
   set_fifo_burst(BURST_FIFO_READ);
-  arducam_spi_transfers(buffer,1);//dummy read
-  int32_t i=1; // First bit needs to be 0xff
+
+  // Dummy read
+  // arducam_spi_transfers(buffer,1);
+
+  int32_t i=0; // First bit needs to be 0xff
   while(len>4096)
   {
     arducam_transfers(&buffer[i],4096);
@@ -107,10 +122,15 @@ int main(int argc, char *argv[]) {
   arducam_spi_transfers(&buffer[i],len);
 
   fwrite(buffer, len+i, 1, fp1);
-  digitalWrite(CAM1_CS,HIGH);  //Set CS HIGH
-  //Close the file
+
+  // Enable bus priority
+  digitalWrite(CAM1_CS,HIGH);
+
   delay(100);
-  fclose(fp1);
+
+  // Close the file
+  // fclose(fp1);
+
   // Clear the capture done flag
   arducam_clear_fifo_flag(CAM1_CS);
 
