@@ -121,7 +121,7 @@ int main(int argc, char *argv[]) {
       exit(EXIT_FAILURE);
   }
 
-  fwrite(buffer, img_len+i, 1, fp1);
+  fwrite(buffer, img_len, 1, fp1);
   delay(100);
   fclose(fp1);
 
