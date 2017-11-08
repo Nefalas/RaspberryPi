@@ -12,7 +12,7 @@
 
 #define BUF_SIZE (384*1024)
 uint8_t buffer[BUF_SIZE] = {0xFF};
-const uint16_t TRANSFER_SIZE = 8192;
+const uint16_t TRANSFER_SIZE = 4096;
 
 const char* filename = "test.jpg";
 
@@ -112,6 +112,8 @@ int main(int argc, char *argv[]) {
   arducam_write_reg(ARDUCHIP_TIM, VSYNC_LEVEL_MASK,CAM1_CS);
 
   size_t img_len = capture();
+
+  printf("Data: %s\n", buffer);
 
   // Open the new file
   FILE *fp1 = fopen(argv[2], "w+");
