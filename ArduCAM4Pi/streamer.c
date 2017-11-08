@@ -12,6 +12,7 @@
 
 #define BUF_SIZE (384*1024)
 uint8_t buffer[BUF_SIZE] = {0xFF};
+const uint16_t TRANSFER_SIZE = 8192;
 
 const char* filename = "test.jpg";
 
@@ -83,10 +84,10 @@ void capture() {
   set_fifo_burst(BURST_FIFO_READ);
 
   int32_t i = 0;
-  while(len > 4096) {
-    arducam_transfers(&buffer[i], 4096);
-    len -= 4096;
-    i += 4096;
+  while(len > TRANSFER_SIZE) {
+    arducam_transfers(&buffer[i], TRANSFER_SIZE);
+    len -= TRANSFER_SIZE;
+    i += TRANSFER_SIZE;
   }
   arducam_spi_transfers(&buffer[i], len);
 
