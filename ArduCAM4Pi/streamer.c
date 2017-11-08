@@ -47,7 +47,7 @@ void setup() {
   }
 }
 
-void capture() {
+size_t capture() {
   printf("Clearing FIFO\n");
   // Flush FIFO
   arducam_flush_fifo(CAM1_CS);
@@ -95,6 +95,7 @@ void capture() {
 
   // Enable bus priority
   digitalWrite(CAM1_CS, HIGH);
+  return len;
 }
 
 int main(int argc, char *argv[]) {
@@ -110,7 +111,7 @@ int main(int argc, char *argv[]) {
   // Enable VSYNC
   arducam_write_reg(ARDUCHIP_TIM, VSYNC_LEVEL_MASK,CAM1_CS);
 
-  capture();
+  size_t img_len = capture();
 
   // Open the new file
   FILE *fp1 = fopen(argv[2], "w+");
@@ -120,7 +121,7 @@ int main(int argc, char *argv[]) {
       exit(EXIT_FAILURE);
   }
 
-  fwrite(buffer, len+i, 1, fp1);
+  fwrite(buffer, img_len+i, 1, fp1);
   delay(100);
   fclose(fp1);
 
