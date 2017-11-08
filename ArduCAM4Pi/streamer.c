@@ -113,7 +113,7 @@ int main(int argc, char *argv[]) {
 
   size_t img_len = capture();
 
-  printf("Data: %s\n", buffer);
+  printf("Length: %s\n", img_len);
 
   // Open the new file
   FILE *fp1 = fopen(argv[2], "w+");
