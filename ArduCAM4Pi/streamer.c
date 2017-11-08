@@ -17,7 +17,21 @@ const uint16_t TRANSFER_SIZE = 4096;
 
 const char* filename = "test.jpg";
 
-clock_t start, stop;
+static struct timeval tm1;
+
+static inline void start()
+{
+    gettimeofday(&tm1, NULL);
+}
+
+static inline void stop()
+{
+    struct timeval tm2;
+    gettimeofday(&tm2, NULL);
+
+    unsigned long long t = 1000 * (tm2.tv_sec - tm1.tv_sec) + (tm2.tv_usec - tm1.tv_usec) / 1000;
+    printf("%llu ms\n", t);
+}
 
 void setup() {
   uint8_t vid, pid, temp;
@@ -53,7 +67,7 @@ void setup() {
 size_t capture() {
   printf("Clearing FIFO\n");
 
-  start = clock();
+  start();
   // Flush FIFO
   arducam_flush_fifo(CAM1_CS);
   // Clear the capture done flag
@@ -101,9 +115,7 @@ size_t capture() {
   // Enable bus priority
   digitalWrite(CAM1_CS, HIGH);
 
-  stop = clock();
-  float elapsed = ((float)(stop - start) / CLOCKS_PER_SEC ) * 1000;  
-  printf("Capture done in %f milliseconds\n", elapsed);
+  stop();
 
   return len + i;
 }
@@ -125,6 +137,7 @@ int main(int argc, char *argv[]) {
 
   printf("Length: %d\n", img_len);
 
+  /*
   // Open the new file
   FILE *fp1 = fopen(filename, "w+");
 
@@ -136,6 +149,7 @@ int main(int argc, char *argv[]) {
   fwrite(buffer, img_len, 1, fp1);
   delay(100);
   fclose(fp1);
+  */
 
   exit(EXIT_SUCCESS);
 }
