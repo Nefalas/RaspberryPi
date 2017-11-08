@@ -121,7 +121,7 @@ int main(int argc, char *argv[]) {
   }
   arducam_spi_transfers(&buffer[i],len);
 
-  fwrite(buffer, len+i, 1, fp1);
+  // fwrite(buffer, len+i, 1, fp1);
 
   // Enable bus priority
   digitalWrite(CAM1_CS,HIGH);
