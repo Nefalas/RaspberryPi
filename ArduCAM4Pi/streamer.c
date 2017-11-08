@@ -13,7 +13,7 @@
 #define BUF_SIZE (384*1024)
 uint8_t buffer[BUF_SIZE] = {0xFF};
 
-// const char* filename = "test.jpg";
+const char* filename = "test.jpg";
 
 void setup() {
   uint8_t vid,pid;
@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
   while (!(arducam_read_reg(ARDUCHIP_TRIG,CAM1_CS) & CAP_DONE_MASK)) ;
   printf("Capture Done\n");
 
-  /*
+
   // Generate JPEG file for testing
   printf("Saving capture as %s\n", filename);
 
@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
     printf("Error: could not open %s\n", argv[2]);
     exit(EXIT_FAILURE);
   }
-  */
+
 
   printf("Reading FIFO\n");
 
@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
   }
 
   // Disable bus priority
-  digitalWrite(CAM1_CS,LOW);
+  digitalWrite(CAM1_CS, LOW);
 
   // Start reading
   set_fifo_burst(BURST_FIFO_READ);
@@ -113,23 +113,22 @@ int main(int argc, char *argv[]) {
   // arducam_spi_transfers(buffer,1);
 
   int32_t i=0; // First bit needs to be 0xff
-  while(len>4096)
-  {
-    arducam_transfers(&buffer[i],4096);
+  while(len>4096) {
+    arducam_transfers(&buffer[i], 4096);
     len -= 4096;
     i += 4096;
   }
-  arducam_spi_transfers(&buffer[i],len);
+  arducam_spi_transfers(&buffer[i], len);
 
-  // fwrite(buffer, len+i, 1, fp1);
+  fwrite(buffer, len+i, 1, fp1);
 
   // Enable bus priority
-  digitalWrite(CAM1_CS,HIGH);
+  digitalWrite(CAM1_CS, HIGH);
 
   delay(100);
 
   // Close the file
-  // fclose(fp1);
+  fclose(fp1);
 
   // Clear the capture done flag
   arducam_clear_fifo_flag(CAM1_CS);
