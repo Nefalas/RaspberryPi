@@ -105,7 +105,7 @@
 //   CAM4_CS |    24    |    5
 /****************************************************/
 
-#define CAM1_CS 7 // OP0 pin 6
+#define CAM1_CS 0
 #define CAM2_CS 4
 #define CAM3_CS 3
 #define CAM4_CS 5
