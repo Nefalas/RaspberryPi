@@ -13,7 +13,7 @@
 
 #define BUF_SIZE (384*1024)
 uint8_t buffer[BUF_SIZE] = {0xFF};
-const uint16_t TRANSFER_SIZE = 1024;
+const uint16_t TRANSFER_SIZE = 4096;
 
 const char* filename = "test.jpg";
 
@@ -126,7 +126,7 @@ int main(int argc, char *argv[]) {
   // Set output format to JPEG
   arducam_set_format(fmtJPEG);
   // Set resolution to HD
-  arducam_OV5642_set_jpeg_size(OV5642_640x480);
+  arducam_OV5642_set_jpeg_size(OV5642_1280x720);
   // wait to let the camera perform the auto exposure correction
   sleep(1);
 
