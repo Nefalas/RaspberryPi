@@ -354,12 +354,12 @@ void arducam_OV5642_set_jpeg_size(jpeg_size_t size)
     break;
     case OV5642_640x480:
     arducam_i2c_write_word_regs(ov5642_dvp_fmt_jpeg_vga);
-    
+
     break;
     case OV5642_1280x720:
-
+    arducam_i2c_write_word_regs(OV5642_720P_Video_setting);
     arducam_i2c_write_word_regs(ov5642_dvp_fmt_jpeg_qvga);
-    arducam_i2c_write_word_regs(ov5642_res_720P);
+    //arducam_i2c_write_word_regs(ov5642_res_720P);
 
     break;
     case OV5642_1920x1080:
