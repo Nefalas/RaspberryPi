@@ -103,8 +103,9 @@ size_t capture() {
   set_fifo_burst(BURST_FIFO_READ);
 
   int32_t i = 0;
-  while(i = 0; i < len; i++) {
+  while (i < len) {
     arducam_transfers(&buffer[i], 1);
+    ++i;
     //len -= TRANSFER_SIZE;
     //i += TRANSFER_SIZE;
   }
