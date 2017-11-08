@@ -17,12 +17,12 @@
 #include <wiringPi.h>
 
 #define	SPI_ARDUCAM_SPEED	1000000
-#define	SPI_ARDUCAM		      0
+#define	SPI_ARDUCAM		      7
 
 static int FD;
 
 bool arducam_spi_init(int SPI_CS)
-{  
+{
     if( SPI_CS >=0 )
     	{
     		pinMode(SPI_CS,OUTPUT);
@@ -35,7 +35,7 @@ bool arducam_spi_init(int SPI_CS)
 bool wiring_init(void)
 {
 	wiringPiSetup();
-	int spi = wiringPiSPISetup(SPI_ARDUCAM, SPI_ARDUCAM_SPEED);   
+	int spi = wiringPiSPISetup(SPI_ARDUCAM, SPI_ARDUCAM_SPEED);
 	return spi != -1;
 }
 
@@ -47,7 +47,7 @@ bool arducam_i2c_init(uint8_t sensor_addr)
 
 void arducam_delay_ms(uint32_t delay)
 {
-  usleep(1000*delay);	
+  usleep(1000*delay);
 }
 
 void arducam_spi_write(uint8_t address, uint8_t value, int SPI_CS)
@@ -59,7 +59,7 @@ void arducam_spi_write(uint8_t address, uint8_t value, int SPI_CS)
 	 wiringPiSPIDataRW (SPI_ARDUCAM, spiData, 2) ;
 	 else
 	 	{
-	 		
+
 	 		digitalWrite(SPI_CS,LOW);
 	 		wiringPiSPIDataRW (SPI_ARDUCAM, spiData, 2) ;
 	 		digitalWrite(SPI_CS,HIGH);
@@ -122,7 +122,7 @@ uint8_t arducam_i2c_write16(uint8_t regID, uint16_t regDat)
 	if(FD != -1)
 	{
 		wiringPiI2CWriteReg16(FD,regID,regDat);
-		
+
 		return(1);
 	}
 	return 0;
@@ -218,8 +218,8 @@ int arducam_i2c_write_word_regs(const struct sensor_reg reglist[])
 	{
 		reg_addr = pgm_read_word(&next->reg);
 		reg_val =  pgm_read_word(&next->val);
-		//if (!arducam_i2c_write16(reg_addr, reg_val)) 
-		
+		//if (!arducam_i2c_write16(reg_addr, reg_val))
+
 		 //My changed
 		if (!arducam_i2c_word_write(reg_addr, reg_val))
 			{
