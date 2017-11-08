@@ -12,7 +12,7 @@
 
 #define BUF_SIZE (384*1024)
 uint8_t buffer[BUF_SIZE] = {0xFF};
-const uint16_t TRANSFER_SIZE = 4096;
+const uint16_t TRANSFER_SIZE = 8192;
 
 const char* filename = "test.jpg";
 
@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
   printf("Length: %d\n", img_len);
 
   // Open the new file
-  FILE *fp1 = fopen(argv[2], "w+");
+  FILE *fp1 = fopen(filename, "w+");
 
   if (!fp1) {
       printf("Error: could not open %s\n", argv[2]);
