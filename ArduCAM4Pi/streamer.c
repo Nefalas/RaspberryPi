@@ -108,7 +108,9 @@ int main(int argc, char *argv[]) {
   // Enable VSYNC
   arducam_write_reg(ARDUCHIP_TIM, VSYNC_LEVEL_MASK,CAM1_CS);
 
-  capture();
+  for (int i = 0, i < 24; i++) {
+    capture();
+  }
 
   exit(EXIT_SUCCESS);
 }
