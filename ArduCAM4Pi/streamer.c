@@ -13,7 +13,7 @@
 
 #define BUF_SIZE (384*1024)
 uint8_t buffer[BUF_SIZE] = {0xFF};
-const uint16_t TRANSFER_SIZE = 2048;
+const uint16_t TRANSFER_SIZE = 4096;
 
 const char* filename = "test.jpg";
 
